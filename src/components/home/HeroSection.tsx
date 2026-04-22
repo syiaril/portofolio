@@ -1,11 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowRight, Download, Terminal } from "lucide-react";
+import { m as motion } from "framer-motion";
+import { ArrowRight, Download, Eye, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { translations } from "@/lib/i18n/translations";
 
 export function HeroSection() {
+  const { t } = useLanguage();
+  const h = translations.hero;
+
   return (
     <section className="relative pt-8 pb-16 md:pt-12 md:pb-24 overflow-hidden">
       {/* Background decorations */}
@@ -25,28 +30,28 @@ export function HeroSection() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              Available for new projects
+              {t(h.badge)}
             </div>
             
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight">
-              Hi, I'm <span className="heading-gradient">Syiaril</span>
+              {t(h.greeting)} <span className="heading-gradient">Syiaril</span>
               <br />
-              Software Engineer.
+              {t(h.role)}
             </h1>
             
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto md:mx-0 leading-relaxed text-balance">
-              I specialize in building scalable web applications, robust backend systems, and crafting responsive user interfaces with a focus on clean architecture.
+              {t(h.description)}
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
               <Button asChild size="lg" className="w-full sm:w-auto rounded-full font-medium">
                 <Link href="/projects" className="gap-2">
-                  View Projects <ArrowRight className="w-4 h-4" />
+                  {t(h.cta1)} <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="w-full sm:w-auto rounded-full font-medium glass hover:bg-secondary/20">
-                <Link href="/contact">
-                  Contact Me
+                <Link href="/about">
+                  {t(h.cta2)}
                 </Link>
               </Button>
             </div>
@@ -77,14 +82,16 @@ export function HeroSection() {
                 
                 <div className="flex text-emerald-400">
                   <span className="mr-2">~</span>
-                  <span className="text-white">curl -s https://api.mhmdsyiaril.my.id/skills</span>
+                  <span className="text-white">stats --tech</span>
                 </div>
                 <div className="text-indigo-300 mt-1">
                   {"{"}
                   <div className="pl-4">
-                    "frontend": ["React", "Next.js", "Tailwind"],<br />
-                    "backend": ["Node.js", "Go", "PostgreSQL"],<br />
-                    "architecture": "Microservices"
+                    "mobile": ["Flutter", "Dart"],<br />
+                    "web": ["Laravel", "React", "Next.js"],<br />
+                    "iot": ["ESP32", "Supabase"],<br />
+                    "security": "Enthusiast",<br />
+                    "leadership": "{t(h.terminal.leadership)}"
                   </div>
                   {"}"}
                 </div>

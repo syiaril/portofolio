@@ -1,9 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import { Mail } from "lucide-react";
-import { GithubIcon, LinkedinIcon, TwitterIcon } from "@/components/SocialIcons";
+import { GithubIcon, InstagramIcon, LinkedinIcon, WhatsAppIcon } from "@/components/SocialIcons";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { translations } from "@/lib/i18n/translations";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
+  const f = translations.footer;
+  const nav = translations.navbar;
 
   return (
     <footer className="border-t border-border bg-background">
@@ -15,20 +22,26 @@ export function Footer() {
               <span className="text-foreground">.</span>
             </Link>
             <p className="text-muted-foreground text-sm max-w-xs">
-              Software Engineer passionate about building modern web applications with focus on performance, design, and user experience.
+              {t(f.description)}
             </p>
           </div>
           
           <div>
-            <h3 className="font-semibold mb-4 text-foreground">Quick Links</h3>
+            <h3 className="font-semibold mb-4 text-foreground">{t(f.quickLinks)}</h3>
             <ul className="space-y-2">
-              {["About", "Projects", "Skills", "Blog", "Contact"].map((item) => (
-                <li key={item}>
+              {[
+                { href: "/about", label: t(nav.about) },
+                { href: "/projects", label: t(nav.projects) },
+                { href: "/skills", label: t(nav.skills) },
+                { href: "/blog", label: t(nav.blog) },
+                { href: "/contact", label: t(nav.contact) },
+              ].map((item) => (
+                <li key={item.href}>
                   <Link
-                    href={`/${item.toLowerCase()}`}
+                    href={item.href}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
-                    {item}
+                    {item.label}
                   </Link>
                 </li>
               ))}
@@ -36,31 +49,21 @@ export function Footer() {
           </div>
           
           <div>
-            <h3 className="font-semibold mb-4 text-foreground">Connect</h3>
+            <h3 className="font-semibold mb-4 text-foreground">{t(f.connect)}</h3>
             <div className="flex space-x-4">
-              <a
-                href="https://github.com/syiaril"
-                target="_blank"
-                rel="noreferrer"
-                className="p-2 bg-secondary text-secondary-foreground rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
-                aria-label="GitHub"
-              >
+              <a href="https://github.com/syiaril" target="_blank" rel="noreferrer" className="p-2 bg-secondary text-secondary-foreground rounded-full hover:bg-primary hover:text-primary-foreground transition-colors" aria-label="GitHub">
                 <GithubIcon className="w-5 h-5" />
               </a>
-              <a
-                href="https://linkedin.com/in/syiaril"
-                target="_blank"
-                rel="noreferrer"
-                className="p-2 bg-secondary text-secondary-foreground rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
-                aria-label="LinkedIn"
-              >
+              <a href="https://linkedin.com/in/muhamad-syiaril-1762ba403" target="_blank" rel="noreferrer" className="p-2 bg-secondary text-secondary-foreground rounded-full hover:bg-primary hover:text-primary-foreground transition-colors" aria-label="LinkedIn">
                 <LinkedinIcon className="w-5 h-5" />
               </a>
-              <a
-                href="mailto:hello@syiaril.com"
-                className="p-2 bg-secondary text-secondary-foreground rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
-                aria-label="Email"
-              >
+              <a href="https://www.instagram.com/mhmdsyiaril" target="_blank" rel="noreferrer" className="p-2 bg-secondary text-secondary-foreground rounded-full hover:bg-primary hover:text-primary-foreground transition-colors" aria-label="Instagram">
+                <InstagramIcon className="w-5 h-5" />
+              </a>
+              <a href="https://wa.me/6285606585418" target="_blank" rel="noreferrer" className="p-2 bg-secondary text-secondary-foreground rounded-full hover:bg-primary hover:text-primary-foreground transition-colors" aria-label="WhatsApp">
+                <WhatsAppIcon className="w-5 h-5" />
+              </a>
+              <a href="mailto:muhamad.syiaril@gmail.com" className="p-2 bg-secondary text-secondary-foreground rounded-full hover:bg-primary hover:text-primary-foreground transition-colors" aria-label="Email">
                 <Mail className="w-5 h-5" />
               </a>
             </div>
@@ -69,10 +72,10 @@ export function Footer() {
         
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            &copy; {currentYear} Muhamad Syi'aril Islami. All rights reserved.
+            &copy; {currentYear} Muhamad Syi&apos;aril Islami. {t(f.copyright)}
           </p>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <span>Built with</span>
+            <span>{t(f.builtWith)}</span>
             <span className="font-medium text-foreground">Next.js & Tailwind</span>
           </div>
         </div>

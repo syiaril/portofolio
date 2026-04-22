@@ -3,23 +3,27 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { m as motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
-
-const links = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/projects", label: "Projects" },
-  { href: "/skills", label: "Skills" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
-];
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { translations } from "@/lib/i18n/translations";
 
 export function Navbar() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const { t } = useLanguage();
+
+  const links = [
+    { href: "/", label: t(translations.navbar.home) },
+    { href: "/about", label: t(translations.navbar.about) },
+    { href: "/projects", label: t(translations.navbar.projects) },
+    { href: "/skills", label: t(translations.navbar.skills) },
+    { href: "/blog", label: t(translations.navbar.blog) },
+    { href: "/contact", label: t(translations.navbar.contact) },
+  ];
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -71,13 +75,15 @@ export function Navbar() {
                 </li>
               ))}
             </ul>
-            <div className="flex items-center border-l pl-6 border-border">
+            <div className="flex items-center gap-1 border-l pl-6 border-border">
+              <LanguageToggle />
               <ThemeToggle />
             </div>
           </nav>
 
           {/* Mobile menu button */}
-          <div className="flex items-center gap-4 md:hidden">
+          <div className="flex items-center gap-2 md:hidden">
+            <LanguageToggle />
             <ThemeToggle />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

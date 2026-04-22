@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image"
 import Link from "next/link"
 import { ExternalLink } from "lucide-react"
@@ -6,12 +8,16 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/Card"
 import { Badge } from "@/components/ui/Badge"
 import { Project } from "@/data/projects"
 import { TechIcon } from "@/components/TechIcon"
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { translations } from "@/lib/i18n/translations";
 
 interface ProjectCardProps {
   project: Project
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const { t } = useLanguage();
+
   return (
     <Card className="flex flex-col overflow-hidden group border-border/50 hover:border-border transition-colors duration-300">
       <div className="relative h-48 sm:h-56 w-full overflow-hidden bg-muted">
@@ -28,7 +34,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       
       <CardHeader className="py-4 pb-2">
         <p className="text-muted-foreground text-sm line-clamp-2">
-          {project.description}
+          {t(project.description)}
         </p>
       </CardHeader>
       
@@ -56,7 +62,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           href={`/projects/${project.slug}`} 
           className="text-sm font-medium hover:text-primary transition-colors hover:underline hover:underline-offset-4"
         >
-          Read Case Study
+          {t(translations.projectCard.readCase)}
         </Link>
         <div className="flex gap-3">
           {project.githubUrl && (

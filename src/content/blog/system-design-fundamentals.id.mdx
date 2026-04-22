@@ -1,0 +1,52 @@
+---
+title: "Desain Sistem: Skalabilitas hingga 10rb Request per Detik"
+date: "2025-02-15"
+excerpt: "Panduan praktis dalam merancang desain sistem untuk aplikasi dengan trafik tinggi, mencakup load balancing, caching, dan skalabilitas database."
+tags: ["Arsitektur", "Desain Sistem", "Backend"]
+---
+
+Menangani trafik tinggi membutuhkan perubahan pola pikir dari sekadar "membuatnya berjalan" menjadi "membuatnya berskala". Ketika sebuah aplikasi mencapai 10.000 request per detik (RPS), hambatan (*bottlenecks*) dalam arsitektur web standar akan mulai terlihat jelas.
+
+Berikut adalah prinsip-prinsip utama yang saya ikuti saat merancang sistem pada skala ini.
+
+## 1. Desentralisasi Database
+
+Database hampir selalu menjadi hambatan pertama. Database relasional seperti PostgreSQL berskala vertikal dengan sangat baik, namun pada titik tertentu, Anda akan mencapai batas perangkat keras.
+
+Untuk menskalakan operasi DB:
+- **Read Replicas:** Arahkan kueri baca saja ke database replika. Ini menangani beban kerja berat sisi pembacaan (yang merupakan mayoritas aplikasi web).
+- **Sharding/Partitioning:** Bagi database besar menjadi bagian-bagian yang lebih kecil, lebih cepat, dan lebih mudah dikelola.
+
+Contoh konfigurasi connection pool di Node.js untuk menggunakan replika:
+
+```javascript
+const { Pool } = require('pg')
+
+// Primary untuk Operasi Tulis (Write)
+const primaryPool = new Pool({ connectionString: process.env.DATABASE_URL })
+
+// Replica untuk Operasi Baca (Read)
+const replicaPool = new Pool({ connectionString: process.env.DATABASE_REPLICA_URL })
+
+async function getUser(id) {
+  // Gunakan replika untuk membaca data
+  return replicaPool.query('SELECT * FROM users WHERE id = $1', [id])
+}
+```
+
+## 2. Strategi Caching yang Agresif
+
+Kueri tercepat adalah kueri yang tidak pernah Anda lakukan ke database.
+
+Saya biasanya menerapkan caching di berbagai lapisan:
+1. **Level CDN:** Cache aset statis dan respons API publik (Vercel Edge Network, Cloudflare).
+2. **Level Aplikasi (Memori):** Data kecil yang sering diminta dan bersifat tetap (*immutable*) dipetakan dalam variabel.
+3. **Distributed Cache (Redis):** Data sesi, hasil kueri DB, dan penghitung pembatasan laju (*rate-limiting*).
+
+## 3. Pemrosesan Asinkron (Asynchronous)
+
+Tidak semuanya harus terjadi selama siklus permintaan HTTP. Jika pengguna mengunggah gambar, mereka tidak perlu menunggu gambar tersebut diproses dan dikompresi.
+
+Letakkan tugas tersebut dalam antrean (*queue*) seperti RabbitMQ atau SQS, dan proses di latar belakang menggunakan node pekerja (*worker nodes*).
+
+> **Poin Utama:** Pahami angka latensi. Membaca dari memori dihitung dalam nanodetik; komunikasi jaringan dihitung dalam milidetik. Rancang jalur kritis Anda untuk mengandalkan sumber data tercepat yang memungkinkan.

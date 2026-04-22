@@ -1,0 +1,52 @@
+---
+title: "System Design: Scaling to 10k Requests per Second"
+date: "2025-02-15"
+excerpt: "A practical guide on architecting system designs for high-traffic applications, covering load balancing, caching, and database scalability."
+tags: ["Architecture", "System Design", "Backend"]
+---
+
+Handling high traffic requires a mindset shift from just "making it work" to "making it scale". When an application reaches 10,000 requests per second (RPS), the bottlenecks in standard web architectures become glaringly obvious.
+
+Here are the core principles I follow when designing systems at this scale.
+
+## 1. Database Decentralization
+
+The database is almost always the first bottleneck. Relational databases like PostgreSQL scale vertically very well, but at a certain point, you will hit hardware limits.
+
+To scale DB operations:
+- **Read Replicas:** Route read-only queries to replica databases. This handles heavy read workloads (which are the majority for web applications).
+- **Sharding/Partitioning:** Divide large databases into smaller, faster, and more manageable pieces.
+
+Example of a connection pool configuration in Node.js to use replicas:
+
+```javascript
+const { Pool } = require('pg')
+
+// Primary for Write Operations
+const primaryPool = new Pool({ connectionString: process.env.DATABASE_URL })
+
+// Replica for Read Operations
+const replicaPool = new Pool({ connectionString: process.env.DATABASE_REPLICA_URL })
+
+async function getUser(id) {
+  // Use replica for reading data
+  return replicaPool.query('SELECT * FROM users WHERE id = $1', [id])
+}
+```
+
+## 2. Aggressive Caching Strategies
+
+The fastest query is the query you never make to the database.
+
+I typically implement caching across multiple layers:
+1. **CDN Level:** Cache static assets and public API responses (Vercel Edge Network, Cloudflare).
+2. **Application Level (Memory):** Small, frequently requested, and immutable data mapped in variables.
+3. **Distributed Cache (Redis):** Session data, DB query results, and rate-limiting counters.
+
+## 3. Asynchronous Processing
+
+Not everything needs to happen during the HTTP request cycle. If a user uploads an image, they don't need to wait for the image to be processed and compressed.
+
+Offload such tasks into a queue like RabbitMQ or SQS, and process them in the background using worker nodes.
+
+> **Key Takeaway:** Understand latency numbers. Reading from memory counts in nanoseconds; network communication counts in milliseconds. Design your critical paths to rely on the fastest possible data sources.

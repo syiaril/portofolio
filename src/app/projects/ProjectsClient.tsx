@@ -6,22 +6,26 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { Button } from "@/components/ui/Button";
-import { motion, AnimatePresence } from "framer-motion";
+import { m as motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { translations } from "@/lib/i18n/translations";
 
 export function ProjectsClient() {
-  const [activeCategory, setActiveCategory] = useState<string>("All");
-  const categories = ["All", ...getAllCategories()];
+  const { t } = useLanguage();
+  const p = translations.projectsPage;
+  const [activeCategory, setActiveCategory] = useState<string>(t(p.all));
+  const categories = [t(p.all), ...getAllCategories()];
 
-  const filteredProjects = activeCategory === "All" 
+  const filteredProjects = activeCategory === t(p.all)
     ? projects 
-    : projects.filter(p => p.category === activeCategory);
+    : projects.filter(proj => proj.category === activeCategory);
 
   return (
     <div className="pt-10 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <ScrollReveal>
         <SectionHeader 
-          title="Projects" 
-          subtitle="A selection of my best work, spanning full-stack applications, robust backends, and creative web experiences." 
+          title={t(p.title)}
+          subtitle={t(p.subtitle)}
         />
       </ScrollReveal>
 
@@ -64,7 +68,7 @@ export function ProjectsClient() {
 
       {filteredProjects.length === 0 && (
         <div className="text-center py-24 text-muted-foreground">
-          <p>No projects found in this category.</p>
+          <p>{t(p.empty)}</p>
         </div>
       )}
     </div>

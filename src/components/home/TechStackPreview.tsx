@@ -6,32 +6,37 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { TechIcon } from "@/components/TechIcon";
 import { Button } from "@/components/ui/Button";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { translations } from "@/lib/i18n/translations";
 
 const primaryTech = [
+  { name: "Laravel", category: "Backend" },
+  { name: "Flutter", category: "Mobile" },
   { name: "React", category: "Frontend" },
   { name: "Next.js", category: "Frontend" },
   { name: "TypeScript", category: "Language" },
-  { name: "Tailwind", category: "Frontend" },
-  { name: "Node.js", category: "Backend" },
   { name: "PostgreSQL", category: "Database" },
-  { name: "Docker", category: "DevOps" },
-  { name: "Go", category: "Language" },
+  { name: "ESP32", category: "IoT" },
+  { name: "Ethical Hacking", category: "Security" },
 ];
 
 export function TechStackPreview() {
+  const { t } = useLanguage();
+  const ts = translations.techStack;
+
   return (
     <section className="py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <SectionHeader 
-              title="Tech Stack" 
-              subtitle="The core technologies I use to build robust and scalable systems."
+              title={t(ts.title)}
+              subtitle={t(ts.subtitle)}
               className="mb-0 max-w-xl"
             />
             <Button variant="outline" asChild className="hidden md:flex gap-2">
               <Link href="/skills">
-                View all skills <ArrowRight className="w-4 h-4" />
+                {t(ts.viewAll)} <ArrowRight className="w-4 h-4" />
               </Link>
             </Button>
           </div>
@@ -58,7 +63,7 @@ export function TechStackPreview() {
         <div className="mt-8 md:hidden flex justify-center">
           <Button variant="outline" asChild className="gap-2 w-full">
             <Link href="/skills">
-              View all skills <ArrowRight className="w-4 h-4" />
+              {t(ts.viewAll)} <ArrowRight className="w-4 h-4" />
             </Link>
           </Button>
         </div>

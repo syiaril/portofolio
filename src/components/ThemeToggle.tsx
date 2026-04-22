@@ -20,9 +20,9 @@ export function ThemeToggle() {
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       className="p-2 rounded-md hover:bg-secondary/50 transition-colors"
-      aria-label="Toggle theme"
+      aria-label="Ubah tema"
     >
-      {theme === "dark" ? <Sun className="w-5 h-5text-yellow-400" /> : <Moon className="w-5 h-5 text-slate-700" />}
+      {theme === "dark" ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-slate-700" />}
     </button>
   );
 }

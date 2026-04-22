@@ -2,18 +2,21 @@
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { BlogCard } from "@/components/BlogCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { ProjectCard } from "@/components/ProjectCard";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
-import { getFeaturedProjects } from "@/data/projects";
+import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { translations } from "@/lib/i18n/translations";
+import { BlogPostMeta } from "@/lib/mdx";
 
-export function FeaturedProjects() {
-  const featuredProjects = getFeaturedProjects();
+export function BlogPreviewClient({ posts }: { posts: BlogPostMeta[] }) {
   const { t } = useLanguage();
-  const fp = translations.featuredProjects;
+  const bp = translations.blogPreview;
+
+  if (posts.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-24 bg-secondary/30">
@@ -21,13 +24,13 @@ export function FeaturedProjects() {
         <ScrollReveal>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <SectionHeader 
-              title={t(fp.title)}
-              subtitle={t(fp.subtitle)}
+              title={t(bp.title)}
+              subtitle={t(bp.subtitle)}
               className="mb-0"
             />
             <Button variant="ghost" asChild className="hidden md:flex gap-2 text-primary group font-medium">
-              <Link href="/projects">
-                {t(fp.viewAll)}
+              <Link href="/blog">
+                {t(bp.viewAll)}
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
@@ -35,17 +38,17 @@ export function FeaturedProjects() {
         </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredProjects.map((project, index) => (
-            <ScrollReveal key={project.slug} delay={index * 0.1}>
-              <ProjectCard project={project} />
+          {posts.map((post, index) => (
+            <ScrollReveal key={post.slug} delay={index * 0.1}>
+              <BlogCard post={post} />
             </ScrollReveal>
           ))}
         </div>
 
         <div className="mt-10 md:hidden flex justify-center">
           <Button variant="outline" asChild className="gap-2">
-            <Link href="/projects">
-              {t(fp.viewAll)} <ArrowRight className="w-4 h-4" />
+            <Link href="/blog">
+              {t(bp.viewAll)} <ArrowRight className="w-4 h-4" />
             </Link>
           </Button>
         </div>
