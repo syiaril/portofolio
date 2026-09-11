@@ -3,7 +3,7 @@ import { getAllPosts } from "@/lib/mdx";
 import { BlogClient } from "./BlogClient";
 
 export const metadata: Metadata = {
-  title: "Blog | Syaril",
+  title: "Blog | Syiaril",
   description: "Menulis tentang desain sistem, performa, dan rekayasa perangkat lunak.",
 };
 

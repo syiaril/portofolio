@@ -13,10 +13,10 @@ import { translations } from "@/lib/i18n/translations";
 export function ProjectsClient() {
   const { t } = useLanguage();
   const p = translations.projectsPage;
-  const [activeCategory, setActiveCategory] = useState<string>(t(p.all));
-  const categories = [t(p.all), ...getAllCategories()];
+  const [activeCategory, setActiveCategory] = useState<string>("ALL");
+  const categories = ["ALL", ...getAllCategories()];
 
-  const filteredProjects = activeCategory === t(p.all)
+  const filteredProjects = activeCategory === "ALL"
     ? projects 
     : projects.filter(proj => proj.category === activeCategory);
 
@@ -39,7 +39,7 @@ export function ProjectsClient() {
               onClick={() => setActiveCategory(category)}
               className="rounded-full"
             >
-              {category}
+              {category === "ALL" ? t(p.all) : category}
             </Button>
           ))}
         </div>

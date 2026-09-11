@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { AboutClient } from "./AboutClient";
 
 export const metadata: Metadata = {
-  title: "About | Syaril",
+  title: "About | Syiaril",
   description: "Learn more about Muhamad Syiaril Islami, a passionate software engineer.",
 };
 

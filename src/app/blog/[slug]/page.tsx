@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // Use ID as default for server-side SEO metadata, 
   // since server components don't know the client language context
   return {
-    title: `${post.meta.title.id} | Syaril`,
+    title: `${post.meta.title.id} | Syiaril`,
     description: post.meta.excerpt.id,
   };
 }

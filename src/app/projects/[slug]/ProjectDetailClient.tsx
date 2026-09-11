@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { GithubIcon } from "@/components/SocialIcons";
 import { Project } from "@/data/projects";
@@ -90,8 +91,14 @@ export function ProjectDetailClient({ project }: { project: Project }) {
             <ScrollReveal delay={0.3}>
               <section>
                 <h2 className="text-2xl font-bold mb-4">{t(pd.architecture)}</h2>
-                <div className="p-6 bg-secondary/30 rounded-2xl border border-border/50 mb-6 font-mono text-sm text-center text-muted-foreground">
-                  {t(pd.architecturePlaceholder)}
+                <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-border/50 mb-6 bg-muted">
+                  {project.imageUrl ? (
+                    <Image src={project.imageUrl} alt={project.title} fill className="object-cover" />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center font-mono text-sm text-center text-muted-foreground bg-secondary/30">
+                      {t(pd.architecturePlaceholder)}
+                    </div>
+                  )}
                 </div>
                 <div className="prose dark:prose-invert prose-lg max-w-none text-muted-foreground">
                   <p>{t(project.architecture)}</p>

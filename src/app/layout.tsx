@@ -23,6 +23,22 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Syiaril | Software Engineer Portfolio",
   description: "Portfolio of Muhamad Syiaril Islami, a passionate software engineer specializing in modern web development.",
+  openGraph: {
+    title: "Syiaril | Software Engineer Portfolio",
+    description: "Portfolio of Muhamad Syiaril Islami, a passionate software engineer specializing in modern web development.",
+    url: "https://syiaril.vercel.app",
+    siteName: "Syiaril Portfolio",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Syiaril Portfolio Preview",
+      },
+    ],
+    locale: "id_ID",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -32,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="id"
       suppressHydrationWarning
       className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >

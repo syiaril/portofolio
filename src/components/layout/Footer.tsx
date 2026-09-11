@@ -18,7 +18,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <Link href="/" className="font-bold text-xl tracking-tighter inline-block mb-4">
-              <span className="heading-gradient">Syaril</span>
+              <span className="heading-gradient">Syiaril</span>
               <span className="text-foreground">.</span>
             </Link>
             <p className="text-muted-foreground text-sm max-w-xs">
