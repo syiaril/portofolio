@@ -24,7 +24,7 @@ export function SkillsClient() {
       </ScrollReveal>
 
       <div className="mt-16 space-y-24">
-        {categories.map((category, catIdx) => (
+        {categories.map((category) => (
           <div key={category} className="scroll-mt-24">
             <ScrollReveal delay={0.1}>
               <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">

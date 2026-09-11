@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { m as motion } from "framer-motion";
-import { ArrowRight, Download, Eye, Terminal } from "lucide-react";
+import { ArrowRight, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { translations } from "@/lib/i18n/translations";
@@ -78,7 +78,7 @@ export function HeroSection() {
                   <span className="mr-2">~</span>
                   <span className="text-white">whoami</span>
                 </div>
-                <div className="text-indigo-300 mt-1 mb-4">"Muhamad Syi'aril Islami"</div>
+                <div className="text-indigo-300 mt-1 mb-4">{`"Muhamad Syi'aril Islami"`}</div>
                 
                 <div className="flex text-emerald-400">
                   <span className="mr-2">~</span>
@@ -87,11 +87,11 @@ export function HeroSection() {
                 <div className="text-indigo-300 mt-1">
                   {"{"}
                   <div className="pl-4">
-                    "mobile": ["Flutter", "Dart"],<br />
-                    "web": ["Laravel", "React", "Next.js"],<br />
-                    "iot": ["ESP32", "Supabase"],<br />
-                    "security": "Enthusiast",<br />
-                    "leadership": "{t(h.terminal.leadership)}"
+                    {`"mobile": ["Flutter", "Dart"],`}<br />
+                    {`"web": ["Laravel", "React", "Next.js"],`}<br />
+                    {`"iot": ["ESP32", "Supabase"],`}<br />
+                    {`"security": "Enthusiast",`}<br />
+                    {`"leadership": "${t(h.terminal.leadership)}"`}
                   </div>
                   {"}"}
                 </div>

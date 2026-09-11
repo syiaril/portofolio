@@ -5,13 +5,8 @@ import {
   SiHtml5, SiCss, SiGit, SiGnubash, SiLinux, SiFlutter, SiSupabase,
   SiShadcnui, SiLaravel, SiMysql, SiPhp, SiDart
 } from "react-icons/si";
-import { Code2, Database, Globe, Hexagon, Layers, Server, Terminal, Cpu } from "lucide-react";
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { Database, Globe, Hexagon, Layers, Server, Cpu } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export function TechIcon({ name, className }: { name: string; className?: string }) {
   const iconProps = { className: cn("w-5 h-5", className) };

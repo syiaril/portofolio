@@ -1,8 +1,16 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import readingTime from "reading-time";
 import { BilingualText } from "./i18n/translations";
+
+function estimateReadingTime(text: string): { id: string; en: string } {
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.ceil(words / 200));
+  return {
+    id: `${minutes} mnt baca`,
+    en: `${minutes} min read`,
+  };
+}
 
 const rootDirectory = path.join(process.cwd(), "src", "content", "blog");
 
@@ -30,12 +38,12 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     const idPath = path.join(rootDirectory, `${realSlug}.id.mdx`);
     const idContent = fs.existsSync(idPath) ? fs.readFileSync(idPath, "utf8") : "";
     const idParsed = matter(idContent);
-    const idReadTime = readingTime(idParsed.content);
+    const idTime = estimateReadingTime(idParsed.content);
 
     const enPath = path.join(rootDirectory, `${realSlug}.en.mdx`);
     const enContent = fs.existsSync(enPath) ? fs.readFileSync(enPath, "utf8") : "";
     const enParsed = matter(enContent);
-    const enReadTime = readingTime(enParsed.content);
+    const enTime = estimateReadingTime(enParsed.content || idParsed.content);
 
     return {
       meta: {
@@ -51,8 +59,8 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
         tags: idParsed.data.tags || enParsed.data.tags || [],
         slug: realSlug,
         readingTime: {
-          id: idReadTime.text.replace('min read', 'mnt baca'),
-          en: enReadTime.text
+          id: idTime.id,
+          en: enTime.en,
         }
       },
       content: {
@@ -60,7 +68,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
         en: enParsed.content || idParsed.content
       }
     };
-  } catch (error) {
+  } catch {
     return null;
   }
 }

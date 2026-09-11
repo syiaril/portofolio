@@ -21,7 +21,7 @@ export function BlogDetailHeader({ meta }: BlogDetailHeaderProps) {
   let formattedDate = meta.date;
   try {
     formattedDate = format(new Date(meta.date), "d MMMM yyyy", { locale: lang === "id" ? idLocale : enUS });
-  } catch (e) {}
+  } catch {}
 
   return (
     <>

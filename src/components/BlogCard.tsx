@@ -21,7 +21,7 @@ export function BlogCard({ post }: BlogCardProps) {
   let formattedDate = post.date;
   try {
     formattedDate = format(new Date(post.date), "d MMMM yyyy", { locale: lang === "id" ? idLocale : enUS });
-  } catch (e) {}
+  } catch {}
 
   return (
     <Card className="flex flex-col h-full group border-border/50 hover:border-primary/50 transition-all duration-300">

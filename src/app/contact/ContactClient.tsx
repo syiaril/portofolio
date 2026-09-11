@@ -53,7 +53,7 @@ export function ContactClient() {
         setStatus("idle");
         alert(t(c.errorSend));
       }
-    } catch (error) {
+    } catch {
       setStatus("idle");
       alert(t(c.errorNetwork));
     }

@@ -52,7 +52,7 @@ export const MDXComponents: MDXRemoteProps["components"] = {
       </a>
     );
   },
-  code: ({ children, className, ...props }: any) => {
+  code: ({ children, className, ...props }: React.ComponentPropsWithoutRef<"code">) => {
     // Handling inline code vs code block
     if (className) {
       return (

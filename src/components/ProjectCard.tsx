@@ -22,10 +22,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
     <Card className="flex flex-col overflow-hidden group border-border/50 hover:border-border transition-colors duration-300">
       <div className="relative h-48 sm:h-56 w-full overflow-hidden bg-muted">
         {project.imageUrl ? (
-          <>
-            <Image src={project.imageUrl} alt={project.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent z-0"></div>
-          </>
+          <Image src={project.imageUrl} alt={project.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 z-0"></div>
         )}
